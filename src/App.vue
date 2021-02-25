@@ -1,5 +1,7 @@
 <template>
   <div class='container'>
+    <span class="material-icons">face</span>
+
     <div class='sidenav'>
       hello
     </div>
