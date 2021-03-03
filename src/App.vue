@@ -1,12 +1,10 @@
 <template>
   <div class='container'>
-    <span class="material-icons">face</span>
-
     <div class='sidenav'>
-      hello
+      <span class="material-icons" title="Add Data Tab" v-on:click='addTab'>note_add</span>
     </div>
     <div class='gridcontainer' id='layoutcontainer'>
-      <Grid />  
+      <Grid ref='mainGrid'/>  
     </div>
   </div>
 </template>
@@ -23,13 +21,15 @@ export default {
       menuVisible: false
     }),
   methods: {
+    addTab() {
+      this.$refs.mainGrid.addDataTab();
+    },
     toggleMenu () {
-      
       this.menuVisible = !this.menuVisible
     }
   },
   mounted() {
-    document.getElementsByClassName('sidenav')[0].contentEditable = true;
+    // document.getElementsByClassName('sidenav')[0].contentEditable = true;
   },
   created() {
   }

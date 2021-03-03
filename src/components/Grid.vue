@@ -90,6 +90,9 @@ export default {
       );
       this.myLayout.updateSize(offsetWidth, offsetHeight);
     },
+    addDataTab() {
+      console.log('boo');
+    }
   },
   created() {
     window.addEventListener("resize", this.gridResizeHandler);
