@@ -1,7 +1,7 @@
 <template>
   <div class='container'>
     <div class='sidenav'>
-      <span class="material-icons" title="Add Data Tab" v-on:click='addTab'>note_add</span>
+      <span id='addGrid' class="material-icons mibutton" title="Add Data Tab" v-on:click='addTab'>note_add</span>
     </div>
     <div class='gridcontainer' id='layoutcontainer'>
       <Grid ref='mainGrid'/>  
@@ -56,7 +56,9 @@ export default {
   height: 100%;
   padding: 10px;
 }
-
+.mibutton:hover {
+  cursor: pointer
+}
 .gridcontainer {
   padding: 2px;
   height: 100%;

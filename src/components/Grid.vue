@@ -10,34 +10,27 @@ import "golden-layout/dist/css/themes/goldenlayout-light-theme.css";
 import "vue-slimgrid/dist/slimgrid.css";
 
 import SlimGrid from "vue-slimgrid";
-import Test from "./Test.vue";
+import Blank from "./Blank.vue";
 
 var config = {
+  settings: {
+        selectionEnabled: true
+      },
   content: [
-    {
-      type: "row",
+    { 
+      type: "row", 
       content: [
         {
           type: "component",
-          componentName: "testComponent",
-          componentState: { label: "A" },
+          componentName: "blankComponent",
+          componentState: { id: Math.random().toString(36).substr(2, 9) },
         },
-        {
-          type: "column",
-          content: [
-            {
-              type: "component",
-              componentName: "testComponent",
-              componentState: { label: "B" },
-            },
-            {
-              type: "component",
-              componentName: "gridComponent",
-              componentState: { label: "C" },
-            },
-          ],
+         {
+          type: "component",
+          componentName: "blankComponent",
+          componentState: { id: Math.random().toString(36).substr(2, 9) },
         },
-      ],
+      ]
     },
   ],
 };
@@ -63,17 +56,16 @@ const SlimGridComponent = function (container, state) {
   return(subcontainer);
 };
 
-const TestComponent = function (container, state) {
-  const TestConstructor = Vue.extend(Test);
-  this.obj = new TestConstructor();
-  this.obj.msg = "Hello Stuff";
+const BlankComponent = function (container) {
+  const BlankConstructor = Vue.extend(Blank);
+  this.obj = new BlankConstructor();
   let subcontainer = container.getElement();
-  subcontainer.id = state.label;
-  Vue.nextTick(() => {
-    this.obj.$mount("#" + state.label);
-  });
-  return subcontainer;
-};
+  this.obj.$mount();
+  subcontainer.appendChild(this.obj.$el);
+  return(subcontainer);
+    
+}
+
 
 export default {
   name: "Grid",
@@ -91,7 +83,12 @@ export default {
       this.myLayout.updateSize(offsetWidth, offsetHeight);
     },
     addDataTab() {
-      console.log('boo');
+      let newItemConfig = {
+          type: "component",
+          componentName: "blankComponent",
+          componentState: { id: Math.random().toString(36).substr(2, 9) },
+      };
+      this.myLayout.root.contentItems[0].addItem(newItemConfig);
     }
   },
   created() {
@@ -99,10 +96,12 @@ export default {
   },
   mounted() {
     const container = document.getElementById("layoutcontainer");
-    this.myLayout = new GoldenLayout(config, container);
-    this.myLayout.registerComponent("testComponent", TestComponent);
+    this.myLayout = new GoldenLayout(config, container );
+    this.myLayout.registerComponent("blankComponent", BlankComponent);
     this.myLayout.registerComponent("gridComponent", SlimGridComponent);
     this.myLayout.init();
+
+
   },
 };
 </script>
