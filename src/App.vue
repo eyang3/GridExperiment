@@ -1,8 +1,39 @@
 <template>
   <div class='container'>
     <div class='sidenav'>
-      <span id='addGrid' class="material-icons mibutton" title="Add Data Tab" v-on:click='addTab'>note_add</span>
+      <span id='addGrid' class="material-icons mibutton" title="Add Tab" v-on:click='addTab'>note_add</span>
+      <span id='addData' class="material-icons mibutton" title="Add Data" @click="$refs.dialog.openModal()">arrow_circle_down</span>
+
     </div>
+    <Dialog ref="dialog">
+      <template v-slot:header>
+        <b> Select Data </b>
+      </template>
+      <template v-slot:body>
+        <p>
+          <b>Add a New Dataset </b>
+          <br>
+          <br>
+          <input v-model="URL" placeholder="Data URL">
+          <br>
+          <br>
+          <input v-model="datasetName" placeholder="Data Set Name">
+          <br>
+          <br>
+          <input type="radio" id="csv" value="csv" v-model="picked">
+          <label for="csv">CSV</label>
+          <input type="radio" id="json" value="json" v-model="picked">
+          <label for="json">JSON</label>
+        </p>
+      </template>
+
+      <template v-slot:footer>
+        <div>
+          <button @click="$refs.modalName.closeModal()">Cancel</button>
+          <button @click="$refs.modalName.closeModal()">Save</button>
+        </div>
+      </template>
+    </Dialog>
     <div class='gridcontainer' id='layoutcontainer'>
       <Grid ref='mainGrid'/>  
     </div>
@@ -11,11 +42,11 @@
 
 <script>
 import Grid from './components/Grid.vue'
-
+import Dialog from './components/Dialog.vue'
 export default {
   name: 'App',
   components: {
-    Grid
+    Grid, Dialog
   },
   data: () => ({
       menuVisible: false

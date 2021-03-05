@@ -1,31 +1,35 @@
 <template>
   <div class="content">
     <div class="vertical-center">
-      <button>Centered Button</button>
+      <button @click="$refs.dialog.openModal()">Configure Data</button>
     </div>
+    <Dialog ref="dialog"> </Dialog>
   </div>
 </template>
 
 <script>
+import Dialog from "./Dialog.vue";
 
 export default {
-  name: 'Blank',
+  components: {
+    Dialog,
+  },
+  name: "Blank",
   props: {
+    picked: String,
     parentid: String,
-    msg: String
+    msg: String,
   },
   mounted() {
-    console.log('boo');
-  }
-
-
-}
+    console.log("boo");
+  },
+};
 </script>
 
 <style scoped>
 .content {
   display: flex;
-  align-items: stretch; 
+  align-items: stretch;
   height: 100%;
 }
 .vertical-center {
@@ -33,6 +37,6 @@ export default {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%)
+  transform: translate(-50%, -50%);
 }
 </style>
