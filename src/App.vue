@@ -29,8 +29,8 @@
 
       <template v-slot:footer>
         <div>
-          <button @click="$refs.modalName.closeModal()">Cancel</button>
-          <button @click="$refs.modalName.closeModal()">Save</button>
+          <button @click="$refs.dialog.closeModal()">Cancel</button>
+          <button @click="save">Save</button>
         </div>
       </template>
     </Dialog>
@@ -52,6 +52,9 @@ export default {
       menuVisible: false
     }),
   methods: {
+    save() {
+      this.$refs.dialog.closeModal()
+    },
     addTab() {
       this.$refs.mainGrid.addDataTab();
     },
