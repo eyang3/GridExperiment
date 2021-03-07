@@ -3,7 +3,7 @@
     <div class='sidenav'>
       <span id='addGrid' class="material-icons mibutton" title="Add Tab" v-on:click='addTab'>note_add</span>
       <span id='addData' class="material-icons mibutton" title="Add Data" @click="$refs.dialog.openModal()">arrow_circle_down</span>
-
+      Hello world
     </div>
     <Dialog ref="dialog">
       <template v-slot:header>
@@ -35,7 +35,7 @@
       </template>
     </Dialog>
     <div class='gridcontainer' id='layoutcontainer'>
-      <Grid ref='mainGrid'/>  
+      <Grid ref='mainGrid'/>
     </div>
   </div>
 </template>
