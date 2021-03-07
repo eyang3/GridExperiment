@@ -2,8 +2,8 @@
   <div class='container'>
     <div class='sidenav'>
       <span id='addGrid' class="material-icons mibutton" title="Add Tab" v-on:click='addTab'>note_add</span>
+
       <span id='addData' class="material-icons mibutton" title="Add Data" @click="$refs.dialog.openModal()">arrow_circle_down</span>
-      Hello world
     </div>
     <Dialog ref="dialog">
       <template v-slot:header>
@@ -48,12 +48,20 @@ export default {
   components: {
     Grid, Dialog
   },
-  data: () => ({
+  data() {
+    return {
+      picked: 'csv',
+      datasetName: 'iris',
+      URL: 'https://gist.githubusercontent.com/curran/a08a1080b88344b0c8a7/raw/0e7a9b0a5d22642a06d3d5b9bcbad9890c8ee534/iris.csv',
       menuVisible: false
-    }),
+    };
+  },
+
   methods: {
     save() {
-      this.$refs.dialog.closeModal()
+      this.$store.commit('addDataset', {url: this.URL, key: this.datasetName, type: this.picked});
+      this.$refs.dialog.closeModal();
+
     },
     addTab() {
       this.$refs.mainGrid.addDataTab();
