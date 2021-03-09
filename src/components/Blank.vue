@@ -1,25 +1,51 @@
 <template>
   <div class="content">
-    {{getDataSets}}
     <div class="vertical-center">
       <button @click="$refs.dialog.openModal()">Configure Data</button>
     </div>
-    <Dialog ref="dialog"> </Dialog>
+    <Dialog ref="dialog"> 
+
+      <template v-slot:header>
+        <b> Select Data </b>
+      </template>
+      <template v-slot:body>
+        <div style="height:150px">
+          <VSelect  :options="getDataSets" v-model="dataKey" label="Data Selection" />
+        </div>
+      </template>
+
+      <template v-slot:footer>
+        <div>
+          <button @click="$refs.dialog.closeModal()">Cancel</button>
+          <button @click="save">Save</button>
+        </div>
+      </template>
+    </Dialog>
   </div>
 </template>
 
 <script>
 import Dialog from "./Dialog.vue";
+import vSelect from 'vue-select';
+import 'vue-select/dist/vue-select.css';
 
 export default {
   components: {
-    Dialog,
+    Dialog, 'VSelect': vSelect
   },
   name: "Blank",
   props: {
-    picked: String,
     parentid: String,
+    picked: String,
     msg: String,
+  },
+  data() {
+    return {dataKey: 'Select Data', category:null}
+  },
+  methods: {
+    save() {
+      console.log(this.dataKey);
+    }
   },
   computed: {
     getDataSets() {
