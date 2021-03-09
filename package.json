@@ -22,6 +22,7 @@
     "vue-golden-layout": "^2.1.1",
     "vue-material": "^1.0.0-beta-15",
     "vue-property-decorator": "^9.1.2",
+    "vue-select": "^3.11.2",
     "vue-slimgrid": "^0.1.39",
     "vuex": "^3.6.2"
   },

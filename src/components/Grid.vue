@@ -8,6 +8,7 @@ import { GoldenLayout } from "golden-layout";
 import "golden-layout/dist/css/goldenlayout-base.css";
 import "golden-layout/dist/css/themes/goldenlayout-light-theme.css";
 import "vue-slimgrid/dist/slimgrid.css";
+import store from '../store/store.js'
 
 import SlimGrid from "vue-slimgrid";
 import Blank from "./Blank.vue";
@@ -58,7 +59,7 @@ const SlimGridComponent = function (container, state) {
 
 const BlankComponent = function (container) {
   const BlankConstructor = Vue.extend(Blank);
-  this.obj = new BlankConstructor();
+  this.obj = new BlankConstructor({store});
   let subcontainer = container.getElement();
   this.obj.$mount();
   subcontainer.appendChild(this.obj.$el);

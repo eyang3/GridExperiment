@@ -71,6 +71,7 @@ export default {
     }
   },
   mounted() {
+    this.$store.commit('addDataset', {url: this.URL, key: 'iris_default', type: this.picked});
     // document.getElementsByClassName('sidenav')[0].contentEditable = true;
   },
   created() {

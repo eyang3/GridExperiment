@@ -11,22 +11,21 @@ const store = new Vuex.Store({
     },
     mutations: {
         async addDataset(state, obj) {
-            console.log('happening');
             let {url, key, type} = obj;
             if(type == 'json') {
                 await axios.get(url).then((data) => {
-                    state.datasets[key] = crossfilter(data);
+                    Vue.set(state.datasets, key, crossfilter(data))
                 })
             } else {
                 await csv(url).then((data) => {
-                    state.datasets[key] = crossfilter(data[0]);
+                    Vue.set(state.datasets, key, crossfilter(data[0]))
                 })
             }
         }
     },
     getters: {
         getDataSets(state) {
-            return (Object.keys(state));
+            return (Object.keys(state.datasets));
         }
     }
 });

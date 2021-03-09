@@ -1,5 +1,6 @@
 <template>
   <div class="content">
+    {{getDataSets}}
     <div class="vertical-center">
       <button @click="$refs.dialog.openModal()">Configure Data</button>
     </div>
@@ -20,8 +21,13 @@ export default {
     parentid: String,
     msg: String,
   },
+  computed: {
+    getDataSets() {
+      return this.$store.getters.getDataSets;
+    }
+  },
   mounted() {
-    console.log("boo");
+
   },
 };
 </script>
