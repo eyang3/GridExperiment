@@ -67,6 +67,11 @@ const BlankComponent = function (container) {
     
 }
 
+var parseHTML = function(str) {
+  var tmp = document.implementation.createHTMLDocument();
+  tmp.body.innerHTML = str;
+  return tmp.body.children;
+};
 
 export default {
   name: "Grid",
@@ -100,8 +105,17 @@ export default {
     this.myLayout = new GoldenLayout(config, container );
     this.myLayout.registerComponent("blankComponent", BlankComponent);
     this.myLayout.registerComponent("gridComponent", SlimGridComponent);
-    this.myLayout.init();
 
+   
+    this.myLayout.init();
+    this.myLayout.on('stackCreated', function(stack) {
+          let html_string = "<span class='material-icons-outlined mibutton headericon' style='font-size:16px'>settings</span>"
+          let html = parseHTML(html_string);
+          console.log(html);
+          stack._target._header.controlsContainer.prepend(html[0]);
+          // stack.header.controlsContainer.prepend('<span class="material-icons mibutton">settings</span>');
+
+    });
 
   },
 };
@@ -123,4 +137,5 @@ li {
 a {
   color: #42b983;
 }
+
 </style>

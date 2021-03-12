@@ -7,6 +7,7 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
     state: {
         datasets: {},
+        columns: {},
         dimensions: {}
     },
     mutations: {
@@ -15,18 +16,28 @@ const store = new Vuex.Store({
             if(type == 'json') {
                 await axios.get(url).then((data) => {
                     Vue.set(state.datasets, key, crossfilter(data))
+                    Vue.set(state.columns, key, Object.keys(data[0]))
                 })
             } else {
                 await csv(url).then((data) => {
                     Vue.set(state.datasets, key, crossfilter(data[0]))
+                    Vue.set(state.columns, key, data.columns)
                 })
             }
         }
     },
     getters: {
         getDataSets(state) {
+            console.log(state.datasets);
             return (Object.keys(state.datasets));
-        }
+        },
+        getColumns (state) {
+            return (query) => {
+                console.log(query);
+                return(state.columns[query]);
+            }
+
+        } 
     }
 });
 

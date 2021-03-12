@@ -3,15 +3,32 @@
     <div class="vertical-center">
       <button @click="$refs.dialog.openModal()">Configure Data</button>
     </div>
-    <Dialog ref="dialog"> 
-
+    <Dialog ref="dialog">
       <template v-slot:header>
         <b> Select Data </b>
       </template>
       <template v-slot:body>
-        <div style="height:150px">
-          <VSelect  :options="getDataSets" v-model="dataKey" label="Data Selection" />
+        <div style="height: 300px">
+          Select Dataset:
+          <VSelect
+            :options="getDataSets"
+            v-model="dataKey"
+            label="Data Selection"
+          />
+          <br>
+          Select Chart Type: <VSelect
+            :options="chartTypes"
+            v-model="chartType"
+            label="Chart Type"
+          />
+          <br>
+          <div v-for="(item, index) in getConfig" v-bind:key="index">
+            {{index}}
+            <VSelect v-if="item == 'column'" :options="getColumns" :value="index" v-model="chartcfg[index]" />
+            <br>
+          </div>
         </div>
+        <br>
       </template>
 
       <template v-slot:footer>
@@ -26,12 +43,13 @@
 
 <script>
 import Dialog from "./Dialog.vue";
-import vSelect from 'vue-select';
-import 'vue-select/dist/vue-select.css';
-
+import vSelect from "vue-select";
+import "vue-select/dist/vue-select.css";
+import configs from './chartConfig'
 export default {
   components: {
-    Dialog, 'VSelect': vSelect
+    Dialog,
+    VSelect: vSelect,
   },
   name: "Blank",
   props: {
@@ -40,20 +58,38 @@ export default {
     msg: String,
   },
   data() {
-    return {dataKey: 'Select Data', category:null}
+    return { dataKey: "", 
+    category: null, chartTypes: ['scatter', 'line', 'bar'], chartType: '',
+    chartcfg: {} 
+    };
   },
   methods: {
     save() {
+      
       console.log(this.dataKey);
-    }
+    },
   },
   computed: {
     getDataSets() {
       return this.$store.getters.getDataSets;
+    },
+    getColumns() {
+      if(this.chartType !== 'Select Chart Type') {
+        return this.$store.getters.getColumns(this.dataKey);  
+      }
+      return([]);
+    },
+    getConfig() {
+      return(configs[this.chartType]);
+    },
+    getDataColumns() {
+      if(this.dataKey != 'Select Data') {
+        return this.$store.getters.getColumns(this.dataKey);  
+      }
+      return ['one'];
     }
   },
   mounted() {
-
   },
 };
 </script>
