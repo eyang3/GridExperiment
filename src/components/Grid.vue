@@ -62,6 +62,7 @@ const BlankComponent = function (container) {
   this.obj = new BlankConstructor({store});
   let subcontainer = container.getElement();
   this.obj.$mount();
+  subcontainer.obj = this.obj;
   subcontainer.appendChild(this.obj.$el);
   return(subcontainer);
     
@@ -70,7 +71,7 @@ const BlankComponent = function (container) {
 var parseHTML = function(str) {
   var tmp = document.implementation.createHTMLDocument();
   tmp.body.innerHTML = str;
-  return tmp.body.children;
+  return tmp.body;
 };
 
 export default {
@@ -111,8 +112,13 @@ export default {
     this.myLayout.on('stackCreated', function(stack) {
           let html_string = "<span class='material-icons-outlined mibutton headericon' style='font-size:16px'>settings</span>"
           let html = parseHTML(html_string);
-          console.log(html);
-          stack._target._header.controlsContainer.prepend(html[0]);
+          let html_base = html.children;
+          console.log(typeof(html_base));
+          html_base[0].onclick = function() {
+            console.log('boo');
+          };
+          console.log(stack._target.contentItems[0].component.obj);
+          stack._target._header.controlsContainer.prepend(html_base[0]);
           // stack.header.controlsContainer.prepend('<span class="material-icons mibutton">settings</span>');
 
     });
